@@ -2,3 +2,5 @@
 'count_cond-correct', (512, 66)
 'multiple-correct', (1024, 66)
 'cycle-correct', (1536, 66)
+'sum_digits-correct', (2048, 66)
+'is_prime-correct', (2560, 66)

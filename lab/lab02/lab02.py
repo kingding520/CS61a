@@ -17,41 +17,35 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-    def h(x):
-        return f(g(x))
-    def k(x):
-        return g(f(x))
-    def differe(x):
-        return h(x) == k(x)
-    return differe
-
+    def identity_checker(x):
+        return f(g(x))==g(f(x))
+    return identity_checker
 
 
 def sum_digits(y):
     """Return the sum of the digits of non-negative integer y."""
-    total = 0
-    while y > 0:
-        total, y = total + y % 10, y // 10
-    return total
+    sum=0
+    while y!=0:
+        sum=sum+y%10
+        y=y//10
+    return sum
 
 def is_prime(n):
     """Return whether positive integer n is prime."""
-    if n == 1:
+    m=n//2
+    if n<2:
         return False
-    k = 2
-    while k < n:
-        if n % k == 0:
+    for i in range(2,m+1):
+        if n%i==0:
             return False
-        k += 1
     return True
-
 def count_cond(condition):
     """Returns a function with one parameter N that counts all the numbers from
     1 to N that satisfy the two-argument predicate function Condition, where
     the first argument for Condition is N and the second argument is the
     number from 1 to N.
 
-    >>> count_fives = count_cond(lambda n, i: sum_digits(n * i) == 5)
+    >>> count_fives = count_cond(lambda n, i: sum_digits(n * i) == 5) 
     >>> count_fives(10)   # 50 (10 * 5)
     1
     >>> count_fives(50)   # 50 (50 * 1), 500 (50 * 10), 1400 (50 * 28), 2300 (50 * 46)
@@ -71,16 +65,13 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-    def target(n):
-        i = 1
-        count = 0
-        while i <= n:
-            if condition(n,i):
-                count += 1
-            i += 1
-        print("DEBUG:",count)
+    def counter(N):
+        count=0
+        for i in range(1,N+1):
+            if condition(N,i):
+                count+=1
         return count
-    return target
+    return counter
 
 
 def multiple(a, b):
@@ -92,13 +83,11 @@ def multiple(a, b):
     42
     """
     "*** YOUR CODE HERE ***"
-    mul = a * b
-    def gcd(c, d):
-        while d != 0:
-            c, d = d, c % d
-        return c
-    return mul // gcd(a, b)
-
+    def GCD(x,y):
+        while y:
+            x,y=y,x%y
+        return x
+    return (a*b)//GCD(a,b)
 
 
 
@@ -129,15 +118,14 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-    def g(n):
-        def h(x):
+    def count(n):
+        def apply_to_x(x):
+            if n==0:
+                return x
+            result=x
+            functions=[f1,f2,f3]
             for i in range(n):
-                if i % 3 == 0:
-                    x = f1(x)
-                elif i % 3 == 1:
-                    x = f2(x)
-                else:
-                    x = f3(x)
-            return x
-        return h
-    return g
+                result=functions[i%3](result)
+            return result
+        return apply_to_x
+    return count
